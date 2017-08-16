@@ -1,0 +1,10 @@
+{
+	"id": "elasticsearch",
+	"image": "elasticsearch:5.4.0",
+	"volume": "/usr/share/elasticsearch/data",
+	"env": {
+		"ES_JAVA_OPTS": "-Xms4g -Xmx4g"
+	},
+	"memory": 4096,
+    "cpu": 3
+}

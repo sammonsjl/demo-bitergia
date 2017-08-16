@@ -1,0 +1,70 @@
+version: '2'
+services:
+
+  mariadb:
+    restart: "always"
+    image: mariadb:10.0
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypass
+    networks:
+      - elk
+
+  elasticsearch:
+      image: elasticsearch:5.4.0
+      ports:
+        - "9200:9200"
+      networks:
+        - elk
+      environment:
+         - ES_JAVA_OPTS-Xms3g -Xmx3g
+        # disable X-Pack
+        # see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
+        #     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
+        # xpack.security.enabled: "false"
+        # xpack.monitoring.enabled: "false"
+        # xpack.graph.enabled: "false"
+        # xpack.watcher.enabled: "false"
+
+  mordred:
+      build: mordred
+      networks:
+        - elk
+      depends_on:
+        - mariadb
+        - elasticsearch
+
+  kibana:
+    image: kibana:5.4.0
+    links:
+      - elasticsearch
+    ports:
+      - "5602:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200 
+      - PROJECT_NAME=Grimoire
+      - NODE_OPTIONS=--max-old-space-size=1024
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibiter:
+    image: bitergia/kibiter:5.4.0
+    links:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200 
+      - PROJECT_NAME=Grimoire
+      - NODE_OPTIONS=--max-old-space-size=1024
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge

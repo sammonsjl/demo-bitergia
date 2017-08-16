@@ -1,0 +1,7 @@
+{
+	"id": "mariadb",
+	"image": "mariadb:10.0",
+	"env": {
+		"MYSQL_ROOT_PASSWORD": "mypass"
+	}
+}

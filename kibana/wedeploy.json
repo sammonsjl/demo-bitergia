@@ -1,0 +1,10 @@
+{
+	"id": "kibana",
+	"image": "kibana:5.4.0",
+	"env": {
+	  	"ELASTICSEARCH_URL": "http://elasticsearch:9200",
+    	"PROJECT_NAME": "Grimoire",
+		"NODE_OPTIONS": "--max-old-space-size=1024"
+	},
+	"memory": 1024
+}
