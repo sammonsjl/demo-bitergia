@@ -12,7 +12,9 @@ services:
       - elk
 
   elasticsearch:
-      image: elasticsearch:5.4.0
+      build: elasticsearch
+      volumes:
+        - bitergia-data-volume:/mnt/shared 
       ports:
         - "9200:9200"
       networks:
@@ -29,14 +31,17 @@ services:
 
   mordred:
       build: mordred
+      volumes:
+      - bitergia-data-volume:/home/bitergia/.perceval
+      - ./mordred/conf:/home/bitergia/conf
       networks:
         - elk
       depends_on:
         - mariadb
         - elasticsearch
 
-  kibana:
-    image: kibana:5.4.0
+  kibiter:
+    image: bitergia/kibiter:5.1.1
     links:
       - elasticsearch
     ports:
@@ -50,8 +55,8 @@ services:
     depends_on:
       - elasticsearch
 
-  kibiter:
-    image: bitergia/kibiter:5.4.0
+  kibiter-public:
+    image: bitergia/kibiter:5.1.1-public
     links:
       - elasticsearch
     ports:
@@ -68,3 +73,6 @@ services:
 networks:
   elk:
     driver: bridge
+
+volumes:
+  bitergia-data-volume:

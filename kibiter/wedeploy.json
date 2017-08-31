@@ -1,8 +1,9 @@
 {
 	"id": "kibiter",
-	"image": "bitergia/kibiter:5.4.0",
+	"image": "bitergia/kibiter:5.1.1",
 	"env": {
 		"ELASTICSEARCH_URL": "http://elasticsearch:9200",
+		"KIBANA_DEFAULTAPPID": "dashboard/Overview",
     	"PROJECT_NAME": "Grimoire",
 		"NODE_OPTIONS": "--max-old-space-size=1024"
 	},

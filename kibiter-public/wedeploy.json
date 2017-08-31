@@ -1,0 +1,10 @@
+{
+	"id": "kibiterpublic",
+	"image": "bitergia/kibiter:5.1.1-public",
+	"env": {
+	  	"ELASTICSEARCH_URL": "http://elasticsearch:9200",
+    	"PROJECT_NAME": "Grimoire",
+		"NODE_OPTIONS": "--max-old-space-size=1024"
+	},
+	"memory": 1024
+}
